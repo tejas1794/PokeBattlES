@@ -1222,6 +1222,3 @@ game = PlayPokemonES()
 # Reset and run
 game.reset()
 game.run()
-
-game.facts
-
