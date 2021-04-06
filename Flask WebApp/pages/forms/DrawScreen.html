@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PokeBattlES</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/adminlte.min.css') }}">
+</head>
+<body style="background-color:#000000;text-align: center;background-image:url({{url_for('static', filename='BG.png')}})">
+    <div class="container">
+        <div class="row">
+            <div class="col align-self-center">
+                <div>
+                    <img class="" style="height:200px" src="{{url_for('static', filename='logo1.png')}}" align="middle" />
+                </div>
+                <form action="http://127.0.0.1:5000/draw" method="post">
+                    <div class="rounded d-inline-flex" style="background-color:#555555;margin:10px;">
+                       <label style="color:#ffffff;margin:10px;">Pokemon {{strategy}} Mode</label>
+                    </div>
+                    <div class="rounded d-inline-flex" style="background-color:#555555;margin:10px;">
+                       <label style="color:#ffffff;margin:10px;">AI HP {{aiHP}}</label>
+                    </div>
+                    <div class="rounded" style="background-color:#888888;margin:30px;">
+                        <div>
+                            <p style="color:#ffffff;margin:10px;">{{(console | safe)}}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <input name="playerhp" value="{{playerHP}}" style="display:none"/>
+                        <input name="aihp" value="{{aiHP}}"  style="display:none"/>
+                        <input name="rnum" value="{{rnum}}"  style="display:none"/>
+                        <input name="totalhp" value="{{totalHP}}"  style="display:none"/>
+                        <button style="margin:10px;" type="submit" class="btn btn-primary">Draw Cards</button>
+                    </div>
+                    <div class="rounded d-inline-flex"  style="background-color:#555555;margin:10px;">
+                       <label style="color:#ffffff;margin:10px;">Player HP {{playerHP}}</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- jQuery -->
+<script src="{{ url_for('static', filename='plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ url_for('static', filename='dist/js/adminlte.min.js') }}"></script>
+<!-- Page specific script -->
+</body>
+</html>
