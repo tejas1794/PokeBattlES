@@ -18,28 +18,30 @@
         <div class="row">
             <div class="col align-self-center">
                 <div>
-                    <img class="" style="height:200px" src="{{url_for('static', filename='logo1.png')}}" align="middle" />
+                    <img class="" style="height:200px;margin:30px;" src="{{url_for('static', filename='logo1.png')}}" align="middle" />
                 </div>
 
                 <form action="http://127.0.0.1:5000/" method="post">
                     <div class="form-group">
                         <label style="color:#000000">
-                            <h1>Pokémon trading card expert system is a game made using Rule based expert systems.</h1>
+                            <h1>Poke trading card expert system is a game made using Rule based expert systems.</h1>
                             <br>
-                            The rules for this game are:
-                            <br>
-                            - Select an HP for you and AI
-                            <br>
-                            - Set Attack Strategy
-                            <br>
-                            - Draw cards
-                            <br>
-                            - Select your best card based on the choices
-                            <br>
-                            - Get your opponent to 0 HP!
+                            <p style="text-align:left;margin:100px">
+                                The rules for this game are:
+                                <br>
+                                - Select an HP for you and AI
+                                <br>
+                                - Set Attack Strategy
+                                <br>
+                                - Draw cards
+                                <br>
+                                - Select your best card based on the choices
+                                <br>
+                                - Get your opponent to 0 HP!
+                            </p>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Begin Game</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Begin Game</button>
                 </form>
             </div>
         </div>

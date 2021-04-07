@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-import pokemon_battles
+import poke_battles
 
 # model_pipeline = load("model.joblib")
 # import numpy as np
@@ -22,9 +22,9 @@ img_dict = {1: 'static\Bulbasaur.JPG',
             151: 'static\Mega Venusaur.JPG',
             4: 'static\Charmander.JPG',
             5: 'static\Charmeleon.JPG',
-            6: 'static\Charizard.JPG',
-            152: 'static\Mega Charizard X.JPG',
-            153: 'static\Mega Charizard Y.JPG',
+            6: 'static\Charizard.png',
+            152: 'static\Mega Charizard X.png',
+            153: 'static\Mega Charizard Y.png',
             7: 'static\Squirtle.JPG',
             8: 'static\Wartortle.JPG',
             9: 'static\Blastoise.JPG',
@@ -78,7 +78,7 @@ img_dict = {1: 'static\Bulbasaur.JPG',
             121: 'static\Starmie.JPG',
             125: 'static\Electabuzz.JPG',
             126: 'static\Magmar.JPG',
-            129: 'static\Magikarp.JPG',
+            129: 'static\Magikarp2.JPG',
             130: 'static\Gyarados.JPG',
             156: 'static\Mega Gyarados.JPG',
             131: 'static\Lapras.JPG',
@@ -93,7 +93,7 @@ img_dict = {1: 'static\Bulbasaur.JPG',
             157: 'static\Mega Aerodactyl.JPG',
             144: 'static\Articuno.JPG',
             145: 'static\Zapdos.JPG',
-            146: 'static\Moltres.JPG',
+            146: 'static\Fartres.JPG',
             150: 'static\Mewtwo.JPG',
             158: 'static\Mega Mewtwo X.JPG',
             159: 'static\Mega Mewtwo Y.JPG',
@@ -112,12 +112,6 @@ img_dict = {1: 'static\Bulbasaur.JPG',
 app = Flask(__name__, template_folder="pages")
 
 
-def is_deceptive(query):
-    # if str(model_pipeline.predict([query])[0]) == "0":
-    #     return "Real"
-    return "Deceptive"
-
-
 @app.route('/', methods=['GET', 'POST'])
 def initialize():
     if request.method == 'POST':
@@ -126,8 +120,13 @@ def initialize():
 
 
 @app.route('/end', methods=['GET', 'POST'])
-def endgame():
-    return render_template('forms/EndGame.html')
+def endgame(status=""):
+    if status != "":
+        if status == "WIN":
+            status = "You Win! You're a poke master! (^_^)"
+        else:
+            status = "You Lose! Better luck next time! (._.)"
+    return render_template('forms/EndGame.html', status=status)
 
 
 @app.route('/startgame', methods=['GET', 'POST'])
@@ -139,7 +138,7 @@ def setup_game():
         total_hp = request.form['totalhp']
         strategy = 'Optimal' if request.form['strategy'] == '1' else 'Random'
         return render_template('forms/DrawScreen.html', playerHP=player_hp, aiHP=ai_hp, strategy=strategy,
-                               console=console_output, rnum=0, totalHP=total_hp)
+                               console=console_output, rnum=0, totalHP=total_hp, legenrn=0)
     return render_template('forms/GameSetup.html')
 
 
@@ -150,19 +149,24 @@ def draw():
         ahp = int(request.form["aihp"])
         rn = int(request.form["rnum"])
         total_hp = int(request.form["totalhp"])
+        legen_rn = int(request.form["legenrn"])
+        strat = request.form["strat"]
         uc = []
         ac = []
-        console, computerhp, userhp, user_cards, computer_cards, rnum = pokemon_battles.runIt(php, ahp, uc, ac, rn, 0,
-                                                                                              "Draw", total_hp)
+        console, computerhp, userhp, user_cards, computer_cards, rnum, legenrn = poke_battles.runIt(php, ahp, uc, ac,
+                                                                                                    rn, 0, "Draw",
+                                                                                                    total_hp, legen_rn)
         return render_template('forms/PlayScreen.html', playerHP=userhp, aiHP=computerhp, console=console,
                                usercards=user_cards, aicards=computer_cards, card=card, rnum=rnum,
                                image1=img_dict[user_cards[0]], val1=user_cards[0],
                                image2=img_dict[user_cards[1]], val2=user_cards[1],
                                image3=img_dict[user_cards[2]], val3=user_cards[2],
                                image4=img_dict[user_cards[3]], val4=user_cards[3],
-                               image5=img_dict[user_cards[4]], val5=user_cards[4], totalHP=total_hp)
+                               image5=img_dict[user_cards[4]], val5=user_cards[4], totalHP=total_hp, legenrn=legenrn,
+                               strategy=strat)
     return render_template('forms/DrawScreen.html', playerHP=player_hp, aiHP=ai_hp, console='',
-                           usercards=ucards, aicards=ccards, card=card, rnum=round_num, totalHP=1000)
+                           usercards=ucards, aicards=ccards, card=card, rnum=round_num, totalHP=1000, legenrn=0,
+                           strategy="")
 
 
 @app.route('/play', methods=['GET', 'POST'])
@@ -173,14 +177,24 @@ def play():
         ahp = int(request.form["aihp"])
         rn = int(request.form["rnum"])
         total_hp = int(request.form["totalhp"])
-        uc = list(map(int, request.form["ucards"][1:len(request.form["ucards"])-1].split(',')))
-        ac = list(map(int, request.form["ccards"][1:len(request.form["ccards"])-1].split(',')))
-        console, computerhp, userhp, user_cards, computer_cards, rnum = pokemon_battles.runIt(php, ahp, uc, ac, rn,
-                                                                                        selected_card, "", total_hp)
-        return render_template('forms/DrawScreen.html', playerHP=userhp, aiHP=computerhp, console=console,
-                               usercards=user_cards, aicards=computer_cards, card=card, rnum=rnum, totalHP=total_hp)
-    return render_template('forms/PlayScreen.html', playerHP=player_hp, aiHP=ai_hp, console='',
-                           usercards=ucards, aicards=ccards, card=card, rnum=round_num, totalHP=1000)
+        legen_rn = int(request.form["legenrn"])
+        strat = request.form["strat"]
+        uc = list(map(int, request.form["ucards"][1:len(request.form["ucards"]) - 1].split(',')))
+        ac = list(map(int, request.form["ccards"][1:len(request.form["ccards"]) - 1].split(',')))
+        console, computerhp, userhp, user_cards, computer_cards, rnum, legenrn = poke_battles.runIt(php, ahp, uc, ac,
+                                                                                                    rn,
+                                                                                                    selected_card, "",
+                                                                                                    total_hp, legen_rn)
+        if computerhp < 0:
+            return endgame("WIN")
+        elif userhp < 0:
+            return endgame("LOSE")
+        else:
+            return render_template('forms/DrawScreen.html', playerHP=userhp, aiHP=computerhp, console=console,
+                                   usercards=user_cards, aicards=computer_cards, card=card, rnum=rnum, totalHP=total_hp,
+                                   legenrn=legenrn, strategy=strat)
+    return render_template('forms/PlayScreen.html', playerHP=player_hp, aiHP=ai_hp, console='', strategy='',
+                           usercards=ucards, aicards=ccards, card=card, rnum=round_num, totalHP=1000, legenrn=0)
 
 
 if __name__ == '__main__':

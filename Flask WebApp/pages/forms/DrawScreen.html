@@ -22,7 +22,7 @@
                 </div>
                 <form action="http://127.0.0.1:5000/draw" method="post">
                     <div class="rounded d-inline-flex" style="background-color:#555555;margin:10px;">
-                       <label style="color:#ffffff;margin:10px;">Pokemon {{strategy}} Mode</label>
+                       <label style="color:#ffffff;margin:10px;">Poke {{strategy}} Mode</label>
                     </div>
                     <div class="rounded d-inline-flex" style="background-color:#555555;margin:10px;">
                        <label style="color:#ffffff;margin:10px;">AI HP {{aiHP}}</label>
@@ -37,7 +37,9 @@
                         <input name="aihp" value="{{aiHP}}"  style="display:none"/>
                         <input name="rnum" value="{{rnum}}"  style="display:none"/>
                         <input name="totalhp" value="{{totalHP}}"  style="display:none"/>
-                        <button style="margin:10px;" type="submit" class="btn btn-primary">Draw Cards</button>
+                        <input name="legenrn" value="{{legenrn}}"  style="display:none"/>
+                        <input name="strat" value="{{strategy}}"  style="display:none"/>
+                        <button style="margin:10px;" type="submit" class="btn btn-primary btn-lg btn-block">Draw Cards</button>
                     </div>
                     <div class="rounded d-inline-flex"  style="background-color:#555555;margin:10px;">
                        <label style="color:#ffffff;margin:10px;">Player HP {{playerHP}}</label>

@@ -23,11 +23,11 @@
                        <label style="color:#ffffff;margin:10px;">AI HP {{aiHP}}</label>
                     </div>
                     <div>
-                        <img src="{{url_for('static', filename='cardback.png')}}" align="middle" />
-                        <img src="{{url_for('static', filename='cardback.png')}}" align="middle" />
-                        <img src="{{url_for('static', filename='cardback.png')}}" align="middle" />
-                        <img src="{{url_for('static', filename='cardback.png')}}" align="middle" />
-                        <img src="{{url_for('static', filename='cardback.png')}}" align="middle" />
+                        <img src="{{url_for('static', filename='cardback.png')}}" width="160" align="middle" />
+                        <img src="{{url_for('static', filename='cardback.png')}}" width="160" align="middle" />
+                        <img src="{{url_for('static', filename='cardback.png')}}" width="160" align="middle" />
+                        <img src="{{url_for('static', filename='cardback.png')}}" width="160" align="middle" />
+                        <img src="{{url_for('static', filename='cardback.png')}}" width="160" align="middle" />
                     </div>
                     <div class="rounded" style="background-color:#888888;margin:30px;">
                         <div>
@@ -41,6 +41,8 @@
                         <input name="ucards" value="{{usercards}}"  style="display:none"/>
                         <input name="ccards" value="{{aicards}}"  style="display:none"/>
                         <input name="totalhp" value="{{totalHP}}"  style="display:none"/>
+                        <input name="legenrn" value="{{legenrn}}"  style="display:none"/>
+                        <input name="strat" value="{{strategy}}"  style="display:none"/>
                         <button type="submit" name="btn" value="{{val1}}"> <img src="{{image1}}" width="160" align="middle" /></button>
                         <button type="submit" name="btn" value="{{val2}}"> <img src="{{image2}}" width="160" align="middle" /></button>
                         <button type="submit" name="btn" value="{{val3}}"> <img src="{{image3}}" width="160" align="middle" /></button>
